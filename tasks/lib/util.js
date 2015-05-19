@@ -3,8 +3,10 @@
 exports.init = function (grunt) {
   var shell = require('shelljs');
   var lineReader = require("line-reader");
-
   var exports = {};
+  
+  // suppress shell output to prevent mysqldump pollution
+  shell.config.silent = true;
 
   exports.db_dump = function(config, output_paths) {
     grunt.file.mkdir(output_paths.dir);
