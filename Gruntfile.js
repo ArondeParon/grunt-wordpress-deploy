@@ -10,6 +10,8 @@
 
 module.exports = function(grunt) {
 
+  grunt.config.set('deploy', grunt.file.readJSON('deploy.json'));
+
   grunt.initConfig({
     jshint: {
       all: [
@@ -31,25 +33,8 @@ module.exports = function(grunt) {
         rsync_args: ['--verbose', '--progress', '-rlpt', '--compress', '--omit-dir-times'],
         exclusions: ['.git', 'tmp/*', 'backups_dir/', 'wp-config.php', 'composer.json', 'composer.lock']
       },
-      local: {
-        title: 'local',
-        database: 'db_local',
-        user: 'user_local',
-        pass: 'pass_local',
-        host: 'host_local',
-        url: 'url_local',
-        path: 'path_local'
-      },
-      production: {
-        title: 'staging',
-        database: 'db_staging',
-        user: 'user_staging',
-        pass: 'pass_staging',
-        host: 'host_staging',
-        url: 'url_staging',
-        path: 'path_staging',
-        ssh_host: 'ssh_staging'
-      }
+      local: grunt.config.get('deploy.local'),
+      production: grunt.config.get('deploy.production'),
     },
 
     nodeunit: {
